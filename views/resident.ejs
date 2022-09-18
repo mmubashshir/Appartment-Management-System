@@ -1,0 +1,105 @@
+<%- include("partials/adminHeader"); %>
+<h1>Resident Details</h1>
+
+<div class="container mb-4">
+  <div class="h-100 p-5 bg-light border rounded-3">
+    <h3>Search By Flat No</h3>
+    <form action="/admin/resident" method="post">
+      <div class="row g-2 pb-2">
+        <div class="col-3">
+          <input type="text" class="form-control" placeholder="Enter Flat No" name="fno" required>
+        </div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-danger">Search</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</div>
+
+<div class="container mb-4">
+  <div class="h-100 p-5 bg-dark text-white border rounded-3">
+    <h3>Add New Residents</h3>
+    <% if(errorMsg.length>0) {%>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+        <use xlink:href="#exclamation-triangle-fill" /></svg>
+
+      <%= errorMsg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    <% if(successMsg.length>0) {%>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+        <use xlink:href="#check-circle-fill" /></svg>
+
+      <%= successMsg %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <% } %>
+    <form action="/admin/resident/add" method="POST">
+
+      <div class="row g-3">
+
+        <div class="col-sm">
+          <input type="text" class="form-control" placeholder="Flat No" name="flatNo" required>
+        </div>
+        <div class="col-sm">
+          <input type="text" id="search validationDefault01" class="form-control" placeholder="Name" name="name"
+            required>
+        </div>
+        <div class="col-sm">
+          <input type="tel" id="search validationDefault01" class="form-control" placeholder="Phone" name="phone" pattern="[6-9]{1}[0-9]{9}"
+            required>
+        </div>
+        <div class="col-sm">
+          <input type="text" id="search validationDefault01" class="form-control" placeholder="Admin ID" name="adminId"
+            required>
+        </div>
+        <div class="col-sm">
+          <button type="submit" class="btn btn-outline-danger">Add</button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Flat No.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Administrator</th>
+
+    </tr>
+  </thead>
+  <tbody>
+
+    <% residentResults.forEach(res => { %>
+    <tr>
+      <form action="/admin/resident/delete" method="POST">
+        <th scope="row"><%= res.FNO %></th>
+        <td><%=res.NAME %></td>
+        <td><%= res.PHONE %></td>
+        <td><%= res.ANAME %></td>
+        <td><input type="button" name="delete" class="btn btn-warning" value=Delete onclick="this.form.submit()"></td>
+        <td><input type="hidden" name=flatNo value=<%= res.FNO %>></td>
+        <!-- <td><button type="submit" class="btn btn-warning" name="delete" value=<%=res.FNO %> onclick="this.form.submit()">Delete</button></td> -->
+      </form>
+    </tr>
+    <% }); %>
+
+  </tbody>
+
+</table>
+<% if(residentResults.length==0){ %>
+<h2 class="text-center">No Flats match found.</h2>
+<% }%>
+
+<%- include("partials/footer"); %>

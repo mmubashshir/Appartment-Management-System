@@ -1,0 +1,60 @@
+<%- include("partials/header"); %>
+<h1>Flat Details</h1>
+
+<!-- Null Submits -->
+<% if(empty.length>0) {%> 
+  <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+    <div>
+      <%= empty %>
+    </div>
+    </div>
+  <% } %>
+<div class="p-5 mb-4 text-white bg-dark rounded-3">
+      <h2>Enquire on Flats</h2>
+      <p>Submit your contact details here.</p>
+      <form class="" action="/flat" method="POST">
+        <div class="mb-3 ">
+          <label class="form-label">Name</label>
+          <input type="text" class="form-control text-black" name="name" placeholder="Enter your name" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone No</label>
+          <input type="text" class="form-control text-black" name="phone" pattern="[6-9]{1}[0-9]{9}" placeholder="Eg: 9876543210" required>
+          
+        </div>            
+        <button class="btn btn-outline-light" type="submit">Submit</button>
+
+      </form>
+</div>
+<!-- successfull submit -->
+<% if(enqSubmit.length>0) {%> 
+<div class="alert alert-success">
+  <h4 class="alert-heading"><%= enqSubmit %></h4>
+  <hr>
+  <p>You have successfully submitted your details. You will be contacted soon.</p>
+</div>
+<% } %>
+
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Flat No.</th>
+        <th scope="col">No Of Rooms</th>
+        <th scope="col">Area</th>
+        <th scope="col">Availablity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% flatResults.forEach(res => { %>
+        <tr>
+            <th scope="row"><%= res.FNO %></th>
+            <td><%=res.NO_OF_ROOMS %></td>
+            <td><%= res.AREA %></td>
+            <td><%= res.AVAILABLITY %></td>
+          </tr>
+    <% }); %>
+    </tbody>
+  </table>
+<%- include("partials/footer"); %>

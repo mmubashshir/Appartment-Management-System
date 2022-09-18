@@ -1,0 +1,19 @@
+.bd-placeholder-img {
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+  }
+  .big-jumbtron {
+      background-image: url("./assets/pexels-expect-best-323705.jpg");
+      /* background-position: center; */
+      background-size: cover;
+      color: aliceblue;
+  }
+
+  @media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+      font-size: 3.5rem;
+    }
+  }

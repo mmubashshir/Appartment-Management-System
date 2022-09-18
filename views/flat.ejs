@@ -1,0 +1,71 @@
+<%- include("partials/adminHeader"); %>
+<h1>Flat Details</h1>
+
+<div class="container">
+  <div class="p-5 mb-4 text-white bg-dark rounded-3">
+    
+  <form class="needs-validation" action="/admin/flat" method="POST">
+
+    
+      <label for="validationDefault01" class="form-label">
+        <h3>Search</h3>
+      </label>
+      <div class="row g-3">
+      <div class="col-3">
+       <input id="search" type="text" class="form-control"
+            placeholder="Search by ..." name="fno" required>
+        
+      </div>
+
+      <div class="col-2">
+        <select id="searchSelect" class="form-select" id="autoSizingSelect" onchange="myFunction(event);" required>
+          <option disabled selected>Choose Option</option>
+          <option selected value="fno" type="name">Flat No</option>
+          <option value="area" type="number">Area</option>
+          <option value="rooms" type="number">Number Of Rooms</option>
+          <option value="avail" type="checkbox">Availablity</option>
+        </select>
+
+      </div>
+      <div class="col-3">
+        <button type="submit" class="btn btn-outline-danger">Search</button>
+      </div>
+  </form>
+</div>
+
+  </div>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Flat No.</th>
+      <th scope="col">No Of Rooms</th>
+      <th scope="col">Area</th>
+      <th scope="col">Availablity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% flatResults.forEach(res => { %>
+    <tr>
+      <th scope="row"><%= res.FNO %></th>
+      <td><%=res.NO_OF_ROOMS %></td>
+      <td><%= res.AREA %></td>
+      <td><%= res.AVAILABLITY %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%if(flatResults.length<=0){ %>
+<h2 class="text-center">
+  No results found.
+</h2>
+<% } %>
+<script>
+  
+  function myFunction(e) {
+    document.getElementById("search").name = e.target.value;
+    document.getElementById("search").type = e.target.type;
+  }
+</script>
+
+<%- include("partials/footer"); %>

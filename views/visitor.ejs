@@ -1,0 +1,64 @@
+<%- include("partials/adminHeader"); %>
+<h1>Visitor Entry Log</h1>
+
+
+<div class="container">
+  <div class="p-5 mb-4 text-white bg-dark rounded-3">
+    <form class="needs-validation" action="/admin/visitor" method="POST">
+
+      <label class="form-label">
+        <h3>Search</h3>
+      </label>
+      <div class="input-group row g-3">
+        <div class="col-4">
+          <input class="form-control" id="search" type="text" name="" placeholder="Search by ..." required>
+
+        </div>
+        <div class="col-3">
+          <select class="form-select" name="" onchange="myFunction(event)" required>
+            <option disabled selected>Choose Option</option>
+            <option value="name">Visitor Name</option>
+            <option value="fno">Flat Number</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <button type="submit" class="btn btn-outline-danger">Search</button>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Visitor id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Flat No</th>
+        <th scope="col">Date & Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% visitorDetails.forEach(res => { %>
+        <tr>
+            <th scope="row"><%= res.V_ID %></th>
+            <td><%=res.NAME %></td>
+            <td><%= res.FNO %></td>
+            <td><%= res.DATE_TIME %></td>
+          </tr>
+    <% }); %>
+    </tbody>
+  </table>
+  <%if(visitorDetails.length<=0){ %>
+    <h2 class="text-center">
+      No results found.
+    </h2>
+    <% } %>
+  <script>
+    function myFunction(e) {
+      document.getElementById("search").name = e.target.value;
+    }
+  </script>
+<%- include("partials/footer"); %>

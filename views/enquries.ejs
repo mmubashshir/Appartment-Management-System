@@ -1,0 +1,101 @@
+<%- include("partials/adminHeader"); %>
+<h1>Customer Enquiries</h1>
+
+<div class="container">
+  <div class="p-5 mb-4 text-white bg-dark rounded-3">
+    <form class="needs-validation" action="/admin/enquiry" method="POST">
+
+      <label class="form-label">
+        <h3>Search</h3>
+      </label>
+      <div class="input-group row g-3">
+        <div class="col-4">
+          <input class="form-control" id="search" type="text" name="" placeholder="Search by ..." required>
+
+        </div>
+        <div class="col-3">
+
+          <select class="form-select" name="" onchange="myFunction(event)" required>
+            <option disabled selected>Choose Option</option>
+            <option value="name">Customer Name</option>
+            <option value="phone">Phone Number</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <button type="submit" class="btn btn-outline-danger">Search</button>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="p-5 mb-4  bg-light rounded-3">
+
+    <form class="needs-validation" action="/admin/enquiry/mark" method="POST">
+      <label for="" class="form-label">
+        <h3>Mark customer as Visited</h3>
+      </label>
+      <% if(errorMark.length>0) {%> 
+        <div class="alert alert-danger d-flex align-items-center" role="alert">
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+          <div>
+            <%= errorMark %>
+          </div>
+          </div>
+        <% } %>
+      <div class="input-group row g-2">
+        <div class="col-4">
+          <input type="text" class="form-control" name="cid" placeholder="Customer ID" required>
+        </div>
+        <div class="col-3">
+          <input type="text" class="form-control" name="fno" placeholder="Flat Number" required>
+        </div>
+        <div class="col-3">
+          <button type="submit" class="btn btn-outline-danger">☑️</button>
+
+        </div>
+      </div>
+  </div>
+  </form>
+
+
+</div>
+
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Customer ID</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Phone Number</th>
+      <th scope="col">Visited</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% enq.forEach(res => { %>
+    <tr>
+      <th scope="row"><%= res.C_ID %></th>
+      <td><%=res.CNAME %></td>
+      <td><%= res.CPHONE %></td>
+      <td><% if(res.FNO){ %>
+        ✅<%= res.FNO %>
+        <% } else {%>
+        ❌
+        <% } %>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%if(enq.length<=0){ %>
+<h2 class="text-center">No results found .</h2>
+<% } %>
+
+<script>
+  function myFunction(e) {
+    document.getElementById("search").name = e.target.value;
+  }
+</script>
+<%- include("partials/footer"); %>
